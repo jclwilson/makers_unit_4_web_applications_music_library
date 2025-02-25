@@ -8,7 +8,7 @@ from lib.database_connection import get_flask_database_connection
 from lib.album_repository import AlbumRepository
 from lib.album import Album
 
-from flask import Flask, request
+from flask import Flask, request, render_template
 
 # Create a new Flask app
 app: Flask = Flask(__name__)
@@ -25,7 +25,7 @@ def get_all_albums():
     connection = get_flask_database_connection(app)
     album_repository = AlbumRepository(connection)
     albums = album_repository.all()
-    return [f"{album.title} ({album.release_year})" for album in albums]
+    return render_template('albums.html', albums=albums)
 
 @app.route('/albums', methods=['POST'])
 def add_album():
