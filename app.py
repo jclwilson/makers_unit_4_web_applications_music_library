@@ -15,9 +15,13 @@ from flask import Flask, request, render_template
 # Create a new Flask app
 app: Flask = Flask(__name__)
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
+
 @app.route('/')
 def index():
-    return "Music Library App"
+    return render_template('home.html')
 
 @app.route('/albums', methods=['GET'])
 def get_all_albums():

@@ -1,20 +1,9 @@
-
-<!DOCTYPE html>
-<html lang="en-GB">
-    <head>
-        <meta charset="utf-8">
-        <title>Music Library App</title>
-        <link rel="stylesheet" href="http://localhost:5001/static/style.css">
-    </head>
-    <body>
-        <header><h1>Music Library App</h1></header>
-        <main>
-            <h2>Artists</h2>
-            <ol id="artist-list">
-                {% for artist in artists %}
-                <li class="artist"><a title="{{ artist.name }}" href="artists/{{ artist.id}}">{{ artist.name }} ({{ artist.genre }})</li>
-                {% endfor %}
-            </ol>
-        </main>
-    </body>
-</html>
+{% extends 'layout.html' %}
+{% block content %}            
+<h2>Artists</h2>
+<ol id="artist-list">
+    {% for artist in artists %}
+    <li class="artist"><a title="{{ artist.name }}" href="artists/{{ artist.id}}">{{ artist.name }} ({{ artist.genre }})</li>
+    {% endfor %}
+</ol>
+{% endblock %}

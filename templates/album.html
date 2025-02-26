@@ -1,20 +1,9 @@
-<!DOCTYPE html>
-<html lang="en-GB">
-    <head>
-        <meta charset="utf-8">
-        <title>Music Library App</title>
-        <link rel="stylesheet" href="http://localhost:5001/static/style.css">
-    </head>
-    <body>
-        <header><h1>Music Library App</h1></header>
-        <main>
-            <h2 id="album_id">Album {{ album.id }}</h2>
-            <ul id="album-info">
-                <li id="album_title">Title: {{ album.title }}</li>
-                <li id="album_release_year">Release year: {{ album.release_year }}</li>
-                <li id="album_artist_id">Artist ID: {{ album.artist_id }}</li>
-                <li id="album_artist_id">Artist Name: {{ album.artist_name }}</li>
-            </ul>
-        </main>
-    </body>
-</html>
+{% extends 'layout.html' %}            
+{% block content %}
+<h2 id="album_id">Album {{ album.id }}</h2>
+<ul id="album-info">
+    <li id="album_title">Title: {{ album.title }}</li>
+    <li id="album_release_year">Release year: {{ album.release_year }}</li>
+    <li id="album_artist_id">Artist: <a href="/artists/{{ album.artist_id }}">{{ album.artist_name }}</a></li>
+</ul>
+{% endblock %}

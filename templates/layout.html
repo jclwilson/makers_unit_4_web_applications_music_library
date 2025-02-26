@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+    <head>
+        <meta charset="utf-8">
+        <title>Music Library App</title>
+        <link rel="stylesheet" href="http://localhost:5001/static/style.css">
+    </head>
+    <body>
+        <header>
+            <h1><a href="/">Music Library App</a></h1>
+            <nav id="header-nav">
+                <ul>
+                    <li><a href="/artists">Artists</a></li>
+                    <li><a href="/albums">Albums</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    </body>
+</html>
