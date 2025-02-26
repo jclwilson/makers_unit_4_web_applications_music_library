@@ -36,7 +36,7 @@ class AlbumRepository:
         '''
         Method to get album and associated artist info from album id.
         '''
-        row = self._connection.execute("SELECT albums.id AS album_id, albums.title, albums.release_year, albums.artist_id, artists.id, artists.name AS artist_name FROM albums JOIN artists ON albums.artist_id = artists.id WHERE albums.id = %s;", [id])
+        row = self._connection.execute("SELECT albums.id AS album_id, albums.title, albums.release_year, albums.artist_id, artists.id, artists.name AS artist_name FROM albums JOIN artists ON albums.artist_id = artists.id WHERE albums.id = %s ORDER BY albums.release_year;", [id])
         if len(row) > 0:
             album = Album(row[0]["album_id"], row[0]["title"], row[0]["release_year"],row[0]['artist_id'])
             album.artist_name = row[0]['artist_name']
