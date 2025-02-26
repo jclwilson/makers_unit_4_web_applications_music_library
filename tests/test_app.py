@@ -57,7 +57,7 @@ def test_get_artists_returns_html(page, test_web_address, db_connection) -> None
     subheader_tag = page.locator("h2")
     expect(subheader_tag).to_have_text("Artists")
     artist_class = page.locator(".artist")
-    expect(artist_class).to_have_count(12)
+    expect(artist_class).to_have_count(4)
 
 def test_get_artists_path_parameters_valid(page, test_web_address, db_connection) -> None:
     '''
@@ -68,12 +68,12 @@ def test_get_artists_path_parameters_valid(page, test_web_address, db_connection
     page.goto(f"http://{test_web_address}/artists/1")
     header_tag = page.locator("h1")
     expect(header_tag).to_have_text("Music Library App")
-    subheader_tag = page.locator("h2")
+    subheader_tag = page.locator("#artist_id")
     expect(subheader_tag).to_have_text("Artist 1")
-    artist_title= page.locator("#artist_title")
-    expect(artist_title).to_have_text('Doolittle')
-    artist_title= page.locator("#artist_release_year")
-    expect(artist_title).to_have_text('1989')
+    artist_title= page.locator("#artist_name")
+    expect(artist_title).to_have_text('Name: Pixies')
+    artist_title= page.locator("#artist_genre")
+    expect(artist_title).to_have_text('Genre: Rock')
 
 
 def test_get_artists_path_parameters_invalid(page, test_web_address, db_connection) -> None:

@@ -7,6 +7,8 @@ import os
 from lib.database_connection import get_flask_database_connection
 from lib.album_repository import AlbumRepository
 from lib.album import Album
+from lib.artist_repository import ArtistRepository
+from lib.artist import Artist
 
 from flask import Flask, request, render_template
 
@@ -55,6 +57,45 @@ def add_album():
     album_artist_id: str = request.form['artist_id']
     new_album: Album = Album(None, album_title, album_release_year, album_artist_id)
     album_repository.create(new_album)
+    return ''
+
+@app.route('/artists', methods=['GET'])
+def get_all_artists():
+    '''
+    Returns all artists to the browser.
+    '''
+    connection = get_flask_database_connection(app)
+    artist_repository = ArtistRepository(connection)
+    artists = artist_repository.all()
+    if len(artists) > 0:
+        return render_template('artists.html', artists=artists)
+    else:
+        return render_template('404.html')
+
+@app.route('/artists/<id>', methods=['GET'])
+def get_artist(id):
+    '''
+    Returns one artist to the browser, specified by id
+    '''
+    connection = get_flask_database_connection(app)
+    artist_repository = ArtistRepository(connection)
+    artist = artist_repository.get_artist_albums(id)
+    if artist:
+        return render_template('artist.html', artist=artist)
+    else:
+        return render_template('404.html')
+
+@app.route('/artists', methods=['POST'])
+def add_artist():
+    '''
+    Adds an artist to the database via a POST request
+    '''
+    connection = get_flask_database_connection(app)
+    artist_repository = ArtistRepository(connection)
+    artist_name: str = request.form['name']
+    artist_genre: str = request.form['artist_genre']
+    new_artist: Artist = Artist(None, artist_name, artist_genre)
+    artist_repository.create(new_artist)
     return ''
 
 '''

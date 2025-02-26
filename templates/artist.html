@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html lang="en-GB">
+    <head>
+        <meta charset="utf-8">
+        <title>Music Library App</title>
+        <link rel="stylesheet" href="http://localhost:5001/static/style.css">
+    </head>
+    <body>
+        <header><h1><a href="/">Music Library App</a></h1></header>
+        <main>
+            <h2 id="artist_id">Artist {{ artist.id }}</h2>
+            <ul id="artist-info">
+                <li id="artist_name">Name: {{ artist.name }}</li>
+                <li id="artist_genre">Genre: {{ artist.genre }}</li>
+            </ul>
+            <h2>Albums</h2>
+            <ul>
+                {% for album in artist.albums %}
+                <li class="album"><a href="/albums/{{ album.id }}"><cite>{{ album.title }}</cite> ({{ album.release_year }})</a></li>
+                {% endfor %}
+            </ul>
+        </main>
+    </body>
+</html>
