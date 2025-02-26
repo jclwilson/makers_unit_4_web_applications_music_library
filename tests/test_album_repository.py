@@ -1,4 +1,3 @@
-
 '''
 Test file for album repository
 '''
@@ -34,7 +33,7 @@ def test_find_single_album_by_id(db_connection):
     db_connection.seed('seeds/music_library.sql')
     repo = AlbumRepository(db_connection)
     result = repo.find(1)
-    assert result == [Album(1, 'Doolittle', 1989, 1)]
+    assert result == Album(1, 'Doolittle', 1989, 1)
 
 
 def test_add_one_album_to_database(db_connection):
@@ -47,7 +46,7 @@ def test_add_one_album_to_database(db_connection):
     album = Album(13, 'OK Computer', 1997, 5)
     repo.create(album)
     added_album = repo.find(13)
-    assert added_album[0] == album
+    assert added_album == album
 
 def test_add_multiple_albums_to_database(db_connection):
     '''
@@ -62,8 +61,8 @@ def test_add_multiple_albums_to_database(db_connection):
     repo.create(album_2)
     added_album_1 = repo.find(13)
     added_album_2 = repo.find(14)
-    assert added_album_1[0] == album_1
-    assert added_album_2[0] == album_2
+    assert added_album_1 == album_1
+    assert added_album_2 == album_2
 
 def test_delete_album_in_database(db_connection):
     '''
@@ -75,7 +74,7 @@ def test_delete_album_in_database(db_connection):
     album = Album(13, 'OK Computer', 1997, 5)
     repo.create(album)
     found_album_1 = repo.find(13)
-    assert found_album_1[0] == album
+    assert found_album_1 == album
     repo.delete(13)
     found_album_2 = repo.find(13)
-    assert found_album_2 == []
+    assert found_album_2 == None 
