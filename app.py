@@ -25,7 +25,23 @@ def get_all_albums():
     connection = get_flask_database_connection(app)
     album_repository = AlbumRepository(connection)
     albums = album_repository.all()
-    return render_template('albums.html', albums=albums)
+    if len(albums) > 0:
+        return render_template('albums.html', albums=albums)
+    else:
+        return render_template('404.html')
+
+@app.route('/albums/<id>', methods=['GET'])
+def get_album(id):
+    '''
+    Returns one album to the browser, specified by id
+    '''
+    connection = get_flask_database_connection(app)
+    album_repository = AlbumRepository(connection)
+    album = album_repository.find(id)
+    if len(album) > 0:
+        return render_template('album.html', album=album)
+    else:
+        return render_template('404.html')
 
 @app.route('/albums', methods=['POST'])
 def add_album():
