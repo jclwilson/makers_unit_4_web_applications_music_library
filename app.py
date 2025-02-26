@@ -38,7 +38,7 @@ def get_album(id):
     connection = get_flask_database_connection(app)
     album_repository = AlbumRepository(connection)
     album = album_repository.find(id)
-    if len(album) > 0:
+    if album:
         return render_template('album.html', album=album)
     else:
         return render_template('404.html')

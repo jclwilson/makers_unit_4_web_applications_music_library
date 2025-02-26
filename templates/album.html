@@ -8,13 +8,12 @@
     <body>
         <header><h1>Music Library App</h1></header>
         <main>
-            {% for album in album %}
             <h2 id="album_id">Album {{ album.id }}</h2>
             <ul id="album-info">
                 <li id="album_title">Title: {{ album.title }}</li>
                 <li id="album_release_year">Release year: {{ album.release_year }}</li>
                 <li id="album_artist_id">Artist ID: {{ album.artist_id }}</li>
-            {% endfor %}
+                <li id="album_artist_id">Artist Name: {{ album.artist_name }}</li>
             </ul>
         </main>
     </body>
