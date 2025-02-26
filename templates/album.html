@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en_GB">
+        <title>Music Library App</title>
+        <link rel="stylesheet" href="static/style.css"/>
+    </head>
+    <body>
+        <header><h1>Music Library App</h1></header>
+        <main>
+            {% for album in album %}
+            <h2 id="album_id">Album {{ album.id }}</h2>
+            <ul id="album-info">
+                <li id="album_title">{{ album.title }}</li>
+                <li id="album_release_year">{{ album.release_year }}</li>
+            {% endfor %}
+            </ul>
+        </main>
+    </body>
+</html>
