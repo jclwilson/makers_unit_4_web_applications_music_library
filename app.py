@@ -36,7 +36,7 @@ def get_all_albums():
     else:
         return render_template('404.html')
 
-@app.route('/albums/<id>', methods=['GET'])
+@app.route('/albums/<int:id>', methods=['GET'])
 def get_album(id):
     '''
     Returns one album to the browser, specified by id
@@ -76,7 +76,7 @@ def get_all_artists():
     else:
         return render_template('404.html')
 
-@app.route('/artists/<id>', methods=['GET'])
+@app.route('/artists/<int:id>', methods=['GET'])
 def get_artist(id):
     '''
     Returns one artist to the browser, specified by id
