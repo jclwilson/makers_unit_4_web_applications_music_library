@@ -43,6 +43,8 @@ class AlbumRepository:
             # album.artist_name = row[0]['artist_name']
             return album
 
+
+
     def create(self, album) -> None:
         '''
         Method to create (add) an album to the albums table.
