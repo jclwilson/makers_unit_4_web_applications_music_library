@@ -48,3 +48,13 @@ def test_validation_invalid_data() -> None:
     assert album_invalid_year.is_valid() is False
     assert album_invalid_artist_id.is_valid() is False
 
+def test_album_generates_errors() -> None:
+    """Test invalid data generates errors."""
+    album_invalid_id = Album(999999999999999, 1, 1997, 5)
+    album_invalid_title = Album(13, "", 1997, 5)
+    album_invalid_year = Album(13, "OK Computer", "1997", 5)
+    album_invalid_artist_id = Album(13, 1, 1997, 9999)
+    assert album_invalid_title.is_valid() is False
+    assert album_invalid_year.is_valid() is False
+    assert album_invalid_title.generate_errors() == ["Album title cannot be blank"]
+    assert album_invalid_year.generate_errors() == ["Release year must be a number"]
