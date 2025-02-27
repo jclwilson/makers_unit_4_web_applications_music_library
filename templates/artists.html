@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+{% block content %}            
+<h2>Artists</h2>
+<ol id="artist-list">
+    {% for artist in artists %}
+    <li class="artist"><a title="{{ artist.name }}" href="artists/{{ artist.id}}">{{ artist.name }} ({{ artist.genre }})</li>
+    {% endfor %}
+</ol>
+{% endblock %}
