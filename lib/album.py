@@ -1,11 +1,8 @@
-'''
-Module Album defines Album class.
-'''
+"""Module Album defines Album class."""
 
 class Album:
-    '''
-    Class: Album, representing albums table in database
-    '''
+    """Class: Album, representing albums table in database."""
+
     def __init__(self, id, title, release_year, artist_id) -> None:
         self.id: int = id
         self.title: str = title
@@ -16,4 +13,4 @@ class Album:
         return self.__dict__ == other.__dict__
 
     def __repr__(self) -> str:
-        return f'Album({self.id}, {self.title}, {self.release_year}, {self.artist_id})'
+        return f"Album({self.id}, {self.title}, {self.release_year}, {self.artist_id})"

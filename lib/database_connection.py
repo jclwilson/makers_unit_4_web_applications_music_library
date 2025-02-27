@@ -1,10 +1,12 @@
-import os, psycopg
+import os
+
+import psycopg
 from flask import g
 from psycopg.rows import dict_row
 
-
 # This class helps us interact with the database.
 # It wraps the underlying psycopg library that we are using.
+
 
 # If the below seems too complex right now, that's OK.
 # That's why we have provided it!
@@ -13,52 +15,54 @@ class DatabaseConnection:
     DEV_DATABASE_NAME = "music_library"
     TEST_DATABASE_NAME = "music_library_test"
 
-
-    def __init__(self, test_mode=False):
+    def __init__(self, test_mode=False) -> None:
         self.test_mode = test_mode
 
     # This method connects to PostgreSQL using the psycopg library. We connect
     # to localhost and select the database name given in argument.
-    def connect(self):
+    def connect(self) -> None:
         try:
             self.connection = psycopg.connect(
-                f"postgresql://localhost/{self._database_name()}",
-                row_factory=dict_row)
+                f"postgresql://localhost/{self._database_name()}", row_factory=dict_row
+            )
         except psycopg.OperationalError:
-            raise Exception(f"Couldn't connect to the database {self._database_name()}! " \
-                    f"Did you create it using `createdb {self._database_name()}`?")
+            raise Exception(
+                f"Couldn't connect to the database {self._database_name()}! "
+                f"Did you create it using `createdb {self._database_name()}`?"
+            )
 
     # This method seeds the database with the given SQL file.
     # We use it to set up our database ready for our tests or application.
-    def seed(self, sql_filename):
+    def seed(self, sql_filename) -> None:
         self._check_connection()
         if not os.path.exists(sql_filename):
             raise Exception(f"File {sql_filename} does not exist")
         with self.connection.cursor() as cursor:
-            cursor.execute(open(sql_filename, "r").read())
+            cursor.execute(open(sql_filename).read())
             self.connection.commit()
 
     # This method executes an SQL query on the database.
     # It allows you to set some parameters too. You'll learn about this later.
-    def execute(self, query, params=[]):
+    def execute(self, query, params=None):
+        if params is None:
+            params = []
         self._check_connection()
         with self.connection.cursor() as cursor:
             cursor.execute(query, params)
-            if cursor.description is not None:
-                result = cursor.fetchall()
-            else:
-                result = None
+            result = cursor.fetchall() if cursor.description is not None else None
             self.connection.commit()
             return result
 
-    CONNECTION_MESSAGE = '' \
-        'DatabaseConnection.exec_params: Cannot run a SQL query as ' \
-        'the connection to the database was never opened. Did you ' \
-        'make sure to call first the method DatabaseConnection.connect` ' \
-        'in your app.py file (or in your tests)?'
+    CONNECTION_MESSAGE = (
+        ""
+        "DatabaseConnection.exec_params: Cannot run a SQL query as "
+        "the connection to the database was never opened. Did you "
+        "make sure to call first the method DatabaseConnection.connect` "
+        "in your app.py file (or in your tests)?"
+    )
 
     # This private method checks that we're connected to the database.
-    def _check_connection(self):
+    def _check_connection(self) -> None:
         if self.connection is None:
             raise Exception(self.CONNECTION_MESSAGE)
 
@@ -66,15 +70,17 @@ class DatabaseConnection:
     def _database_name(self):
         if self.test_mode:
             return self.TEST_DATABASE_NAME
-        else:
-            return self.DEV_DATABASE_NAME
+        return self.DEV_DATABASE_NAME
+
 
 # This function integrates with Flask to create one database connection that
 # Flask request can use. To see how to use it, look at example_routes.py
 def get_flask_database_connection(app):
-    if not hasattr(g, 'flask_database_connection'):
+    if not hasattr(g, "flask_database_connection"):
         g.flask_database_connection = DatabaseConnection(
-            test_mode=((os.getenv('APP_ENV') == 'test') or (app.config['TESTING'] == True))
+            test_mode=(
+                (os.getenv("APP_ENV") == "test") or (app.config["TESTING"] is True)
+            )
         )
         g.flask_database_connection.connect()
     return g.flask_database_connection

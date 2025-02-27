@@ -1,7 +1,9 @@
 class Artist:
     # We initialise with all of our attributes
     # Each column in the table should have an attribute here
-    def __init__(self, id, name, genre, albums = []):
+    def __init__(self, id, name, genre, albums=None) -> None:
+        if albums is None:
+            albums = []
         self.id = id
         self.name = name
         self.genre = genre
@@ -13,5 +15,5 @@ class Artist:
         return self.__dict__ == other.__dict__
 
     # This method makes it look nicer when we print an Artist
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Artist({self.id}, {self.name}, {self.genre})"

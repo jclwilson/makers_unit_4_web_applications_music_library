@@ -1,0 +1,35 @@
+[lint]
+select = [
+    # FLAKE8-ANNOTATIONS
+    "ANN",
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+    # flake8 import conventions
+    "ISC",
+    # flake8-pie
+    "PIE",
+    # flake8-pytest-style
+    "PT",
+    #flake8-quotes
+    "Q",
+    #flake8-return
+    "RET",
+    #flake8-tidy-imports
+    "TID",
+    #flake8-unused-argumetns
+    "ARG",
+    #pydoc-style
+    "D",
+    #ruff-specific
+    "RUF",
+]
