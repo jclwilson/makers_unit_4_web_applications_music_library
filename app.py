@@ -4,7 +4,7 @@ Entry point to music library application.
 
 import os
 
-from flask import Flask, render_template, request
+from flask import Flask, redirect, render_template, request
 
 from lib.album import Album
 from lib.album_repository import AlbumRepository
@@ -52,17 +52,21 @@ def get_new_album() -> str:
     """Return HTML form to add new album"""
     return render_template("add_album.html")
 
-@app.route("/albums", methods=["POST"])
-def add_album() -> str:
-    """Adds an album to the database via a POST request."""
+
+@app.route("/albums/new", methods=["POST"])
+def add_new_album() :
+    """Add an album to the database via a POST request."""
     connection = get_flask_database_connection(app)
     album_repository = AlbumRepository(connection)
-    album_title: str = request.form["title"]
-    album_release_year: str = request.form["release_year"]
-    album_artist_id: str = request.form["artist_id"]
-    new_album: Album = Album(None, album_title, album_release_year, album_artist_id)
-    album_repository.create(new_album)
-    return ""
+    album_title: str = request.form["album-title"]
+    album_release_year: str = request.form["album-release-year"]
+    album_artist_id: str = request.form["album-artist-id"]
+    album: Album = Album(None, album_title, album_release_year, album_artist_id)
+    if album.is_valid():
+        album = album_repository.create(album)
+        print(album.id)
+        return redirect(f"/albums/{album.id}")
+    return render_template("add_album.html", album=album, errors=album.generate_errors()), 400
 
 
 @app.route("/artists", methods=["GET"])

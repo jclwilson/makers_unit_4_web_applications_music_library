@@ -54,13 +54,16 @@ class AlbumRepository:
             return album
         return None
 
-    def create(self, album: Album) -> None:
+    def create(self, album: Album) -> object:
         """Create (add) an album to the albums table."""
-        self._connection.execute(
+        rows = self._connection.execute(
             "INSERT INTO albums (title, release_year, artist_id) \
-                    VALUES (%s, %s, %s)",
+                    VALUES (%s, %s, %s) RETURNING id",
             [album.title, album.release_year, album.artist_id],
         )
+        row = rows[0]
+        album.id = row['id']
+        return album
 
     def delete(self, id: int) -> None:
         """Delete a row from the albums table, reflecting the given ID."""
