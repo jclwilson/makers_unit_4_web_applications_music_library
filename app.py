@@ -47,6 +47,10 @@ def get_album(id):
         return render_template("album.html", album=album)
     return render_template("404.html")
 
+@app.route("/albums/new", methods=["GET"])
+def get_new_album() -> str:
+    """Return HTML form to add new album"""
+    return render_template("add_album.html")
 
 @app.route("/albums", methods=["POST"])
 def add_album() -> str:
