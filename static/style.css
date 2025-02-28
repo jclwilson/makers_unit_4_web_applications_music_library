@@ -1,3 +1,10 @@
 body {
     font-family: sans-serif;
 }
+
+#errors {
+    background: #EB455F;
+    padding: 0.5em;
+    color: #FEFEFE;
+    margin-bottom:1em;
+}

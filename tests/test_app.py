@@ -91,3 +91,34 @@ def test_get_artists_path_parameters_invalid(
     expect(header_tag).to_have_text("Music Library App")
     subheader_tag = page.locator("h2")
     expect(subheader_tag).to_have_text("404 - File not found")
+
+def test_add_album_path_parameters_valid(page, test_web_address, db_connection) -> None:
+    """When we call /albums/new, return an html form."""
+    db_connection.seed("seeds/music_library.sql")
+    page.goto(f"http://{test_web_address}/albums/new")
+    header_tag = page.locator("h1")
+    expect(header_tag).to_have_text("Music Library App")
+    subheader_tag = page.locator("h2")
+    expect(subheader_tag).to_have_text("Add album")
+    input_form= page.locator("form")
+    expect(input_form).to_have_id("add-new-album-form")
+
+
+def test_add_invalid_album_returns_error(page, test_web_address, db_connection) -> None:
+    """When an invalid album is submitted, app returns error"""
+    db_connection.seed("seeds/music_library.sql")
+    page.goto(f"http://{test_web_address}/albums/new")
+    page.fill("input[name=album-title]", "OK Computer")
+    page.fill("input[name=album-release-year]", "1997")
+    page.fill("input[name=album-artist-id]", "1")
+    page.get_by_text("submit").click()
+    subheader_tag = page.locator("h2")
+    expect(subheader_tag).to_have_text("Album 13")
+    album_title = page.locator("#album_title")
+    expect(album_title).to_have_text("Title: OK Computer")
+    album_title = page.locator("#album_release_year")
+    expect(album_title).to_have_text("Release year: 1997")
+
+
+def test_add_valid_album_returns_success(page, test_web_address, db_connection) -> None:
+    """When a valid new album is submitted, it is added to the database"""
