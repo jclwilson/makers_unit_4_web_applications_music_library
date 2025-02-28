@@ -1,6 +1,7 @@
 """Defines the AlbumRepository class."""
 
 from lib.album import Album
+from lib.artist import Artist
 
 
 class AlbumRepository:
@@ -34,11 +35,11 @@ class AlbumRepository:
             )
         return None
 
-    def get_album_artist(self, id: int) -> Album | None:
+    def get_album_artist(self, id: int) -> dict | None:
         """Get album and associated artist info from album id."""
         row = self._connection.execute(
             "SELECT albums.id AS album_id, albums.title, albums.release_year, \
-                albums.artist_id, artists.id, artists.name AS artist_name \
+                albums.artist_id, artists.id, artists.name AS artist_name, artists.genre \
                 FROM albums JOIN artists ON albums.artist_id = artists.id \
                 WHERE albums.id = %s ORDER BY albums.release_year;",
             [id],
@@ -50,8 +51,8 @@ class AlbumRepository:
                 row[0]["release_year"],
                 row[0]["artist_id"],
             )
-            album.artist_name = row[0]["artist_name"]
-            return album
+            artist = Artist(row[0]["artist_id"], row[0]["artist_name"], row[0]["genre"])
+            return {"album":album, "artist": artist}
         return None
 
     def create(self, album: Album) -> object:
@@ -62,7 +63,7 @@ class AlbumRepository:
             [album.title, album.release_year, album.artist_id],
         )
         row = rows[0]
-        album.id = row['id']
+        album.id = row["id"]
         return album
 
     def delete(self, id: int) -> None:

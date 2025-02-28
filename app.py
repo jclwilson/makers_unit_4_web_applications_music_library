@@ -42,9 +42,9 @@ def get_album(id):
     """Returns one album to the browser, specified by id."""
     connection = get_flask_database_connection(app)
     album_repository = AlbumRepository(connection)
-    album = album_repository.get_album_artist(id)
-    if album:
-        return render_template("album.html", album=album)
+    album_info = album_repository.get_album_artist(id)
+    if album_info:
+        return render_template("album.html", artist=album_info["artist"], album=album_info["album"])
     return render_template("404.html")
 
 

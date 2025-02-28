@@ -4,6 +4,6 @@
 <ul id="album-info">
     <li id="album_title">Title: {{ album.title }}</li>
     <li id="album_release_year">Release year: {{ album.release_year }}</li>
-    <li id="album_artist_id">Artist: <a href="{{ url_for('get_artist', id = album.artist_id) }}">{{ album.artist_name }}</a></li>
+    <li id="album_artist_id">Artist: <a href="{{ url_for('get_artist', id = artist.id) }}">{{ artist.name }}</a></li>
 </ul>
 {% endblock %}
