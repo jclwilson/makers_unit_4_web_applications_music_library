@@ -7,8 +7,8 @@
 </ul>
 <h2>Albums</h2>
 <ul>
-    {% for album in artist.albums %}
-    <li class="album"><a href="/albums/{{ album.id }}"><cite>{{ album.title }}</cite> ({{ album.release_year }})</a></li>
+    {% for album in albums %}
+    <li class="album"><a href="{{ url_for('get_album', id = album.id) }}"><cite>{{ album.title }}</cite> ({{ album.release_year }})</a></li>
     {% endfor %}
 </ul>
 {% endblock %}

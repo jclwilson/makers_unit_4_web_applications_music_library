@@ -2,6 +2,6 @@
 {% block content %}
 <p>What do you want to do?</p>
 <ul>
-    <li><a href="/albums/new">Add new album</a></li>
+    <li><a href="{{ url_for('add_new_album') }}">Add new album</a></li>
 </ul>
 {% endblock %}
