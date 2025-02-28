@@ -127,8 +127,8 @@ def test_add_valid_album_returns_success(page, test_web_address, db_connection) 
     expect(subheader_tag).to_have_text("Album 13")
     album_title = page.locator("#album_title")
     expect(album_title).to_have_text("Title: OK Computer")
-    album_title = page.locator("#album_release_year")
-    expect(album_title).to_have_text("Release year: 1997")
+    album_release_year = page.locator("#album_release_year")
+    expect(album_release_year).to_have_text("Release year: 1997")
 
 
 def test_add_artist_path_parameters_valid(page, test_web_address, db_connection) -> None:
