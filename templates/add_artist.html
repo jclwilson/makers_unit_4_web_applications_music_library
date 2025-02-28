@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}            
+{% block content %}
+<h2 id="artist_id">Add artist</h2>
+{% if errors %}
+<aside id="errors">
+    <p>Whoops, there were some errors!</p>
+    <ol>
+    {% for error in errors %}
+        <li>{{ error }}</li>
+    {% endfor %} 
+    </ol>
+</aside>
+{% endif %}
+<form id="add-new-artist-form" name="add-new-artist" class="form" method="post">
+    <label for="artist-name" >Name:</label>
+    <input type="text" id="artist-name" name="artist-name" minlength=0 required placeholder="Example Name: Jake Wilson"/>
+    <label for="artist-genre" >Genre:</label>
+    <input type="text" id="artist-genre" name="artist-genre" minlength=0 required placeholder="Example Genre: Alternative"/>
+    <button type="submit" id="submit-new-album-button" name="submit-new-album">Submit</button>
+    <button type="reset">clear</button>
+</form>
+{% endblock %}

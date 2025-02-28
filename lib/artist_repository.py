@@ -1,3 +1,6 @@
+"""Defines artist repositoryy
+"""
+
 from lib.album import Album
 from lib.artist import Artist
 
@@ -20,8 +23,10 @@ class ArtistRepository:
         rows = self._connection.execute(
             "SELECT * from artists WHERE id = %s", [artist_id]
         )
-        row = rows[0]
-        return Artist(row["id"], row["name"], row["genre"])
+        if rows:
+            row = rows[0]
+            return Artist(row["id"], row["name"], row["genre"])
+        return None
 
     def get_artist_albums(self, artist_id):
         artist = self.find(artist_id)
@@ -43,13 +48,14 @@ class ArtistRepository:
         return albums
 
     def create(self, artist) -> None:
-        self._connection.execute(
-            "INSERT INTO artists (name, genre) VALUES (%s, %s)",
+        rows = self._connection.execute(
+            "INSERT INTO artists (name, genre) VALUES (%s, %s) RETURNING id",
             [artist.name, artist.genre],
         )
-        return
+        row = rows[0]
+        artist.id = row["id"]
+        return artist
 
-    # Delete an artist by their id
     def delete(self, artist_id) -> None:
         self._connection.execute("DELETE FROM artists WHERE id = %s", [artist_id])
         return

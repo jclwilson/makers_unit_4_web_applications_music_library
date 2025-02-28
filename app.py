@@ -86,21 +86,31 @@ def get_artist(id):
     connection = get_flask_database_connection(app)
     artist_repository = ArtistRepository(connection)
     artist_info = artist_repository.get_artist_albums(id)
-    if artist_info:
+    if artist_info["artist"]:
         return render_template("artist.html", artist=artist_info["artist"], albums=artist_info["albums"])
     return render_template("404.html")
 
+@app.route("/artists/new", methods=["GET"])
+def get_new_artist() -> str:
+    """Return HTML form to add new artist"""
+    return render_template("add_artist.html")
 
-@app.route("/artists", methods=["POST"])
+@app.route("/artists/new", methods=["POST"])
 def add_new_artist() -> str:
     """Adds an artist to the database via a POST request."""
     connection = get_flask_database_connection(app)
     artist_repository = ArtistRepository(connection)
-    artist_name: str = request.form["name"]
-    artist_genre: str = request.form["artist_genre"]
-    new_artist: Artist = Artist(None, artist_name, artist_genre)
-    artist_repository.create(new_artist)
-    return ""
+    artist_name: str = request.form["artist-name"]
+    artist_genre: str = request.form["artist-genre"]
+    
+    artist: Artist = Artist(None, artist_name, artist_genre)
+
+    if artist.is_valid():
+        print("valid")
+        new_artist = artist_repository.create(artist)
+        return redirect(f"/artists/{new_artist.id}")
+    print("invalid")
+    return render_template("add_artist.html", errors=artist.generate_errors()), 400
 
 
 """
