@@ -21,38 +21,20 @@ class AlbumRepository:
             ]
         return None
 
-    def find(self, id: int) -> Album | None:
+    def find(self, id: int) -> dict | None:
         """Find a single album with a given ID."""
-        row = self._connection.execute(
-            "SELECT * FROM albums WHERE albums.id = %s;", [id]
+        rows = self._connection.execute(
+                "SELECT albums.*, artists.id AS artist_id, artists.name, artists.genre FROM albums LEFT JOIN artists ON artists.id = albums.artist_id WHERE albums.id = %s;", [id]
         )
-        if len(row) > 0:
-            return Album(
-                row[0]["id"],
-                row[0]["title"],
-                row[0]["release_year"],
-                row[0]["artist_id"],
-            )
-        return None
-
-    def get_album_artist(self, id: int) -> dict | None:
-        """Get album and associated artist info from album id."""
-        row = self._connection.execute(
-            "SELECT albums.id AS album_id, albums.title, albums.release_year, \
-                albums.artist_id, artists.id, artists.name AS artist_name, artists.genre \
-                FROM albums JOIN artists ON albums.artist_id = artists.id \
-                WHERE albums.id = %s ORDER BY albums.release_year;",
-            [id],
-        )
-        if len(row) > 0:
+        if rows:
             album = Album(
-                row[0]["album_id"],
-                row[0]["title"],
-                row[0]["release_year"],
-                row[0]["artist_id"],
+                rows[0]["id"],
+                rows[0]["title"],
+                rows[0]["release_year"],
+                rows[0]["artist_id"],
             )
-            artist = Artist(row[0]["artist_id"], row[0]["artist_name"], row[0]["genre"])
-            return {"album":album, "artist": artist}
+            artist = Artist(rows[0]["artist_id"], rows[0]["name"], rows[0]["genre"])
+            return {"artist": artist, "album": album}
         return None
 
     def create(self, album: Album) -> object:

@@ -42,7 +42,7 @@ def get_album(id):
     """Returns one album to the browser, specified by id."""
     connection = get_flask_database_connection(app)
     album_repository = AlbumRepository(connection)
-    album_info = album_repository.get_album_artist(id)
+    album_info = album_repository.find(id)
     if album_info:
         return render_template("album.html", artist=album_info["artist"], album=album_info["album"])
     return render_template("404.html")
@@ -65,7 +65,6 @@ def add_new_album() :
     album: Album = Album(None, album_title, album_release_year, album_artist_id)
     if album.is_valid():
         album = album_repository.create(album)
-        print(album.id)
         return redirect(f"/albums/{album.id}")
     return render_template("add_album.html", album=album, errors=album.generate_errors()), 400
 
@@ -88,7 +87,7 @@ def get_artist(id):
     artist_repository = ArtistRepository(connection)
     artist_info = artist_repository.get_artist_albums(id)
     if artist_info:
-        return render_template("artist.html", artist=artist_info['artist'], album=artist_info['albums'])
+        return render_template("artist.html", artist=artist_info["artist"], albums=artist_info["albums"])
     return render_template("404.html")
 
 

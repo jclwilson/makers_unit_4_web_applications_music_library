@@ -30,19 +30,17 @@ def test_find_single_album_by_id(db_connection) -> None:
     db_connection.seed("seeds/music_library.sql")
     repo = AlbumRepository(db_connection)
     result = repo.find(1)
-    assert result == Album(1, "Doolittle", 1989, 1)
+    assert result["album"] == Album(1, "Doolittle", 1989, 1)
 
 
 def test_add_one_album_to_database(db_connection) -> None:
-    """When I add an album to the library
-    It is added to the database.
-    """
+    """When I add an album to the library, it is added to the database."""
     db_connection.seed("seeds/music_library.sql")
     repo = AlbumRepository(db_connection)
-    album = Album(13, "OK Computer", 1997, 5)
+    album = Album(13, "OK Computer", 1997, 4)
     repo.create(album)
     added_album = repo.find(13)
-    assert added_album == album
+    assert added_album["album"] == album
 
 
 def test_add_multiple_albums_to_database(db_connection) -> None:
@@ -51,14 +49,14 @@ def test_add_multiple_albums_to_database(db_connection) -> None:
     """
     db_connection.seed("seeds/music_library.sql")
     repo = AlbumRepository(db_connection)
-    album_1 = Album(13, "OK Computer", 1997, 5)
-    album_2 = Album(14, "National Anthem", 2000, 5)
+    album_1 = Album(13, "OK Computer", 1997, 4)
+    album_2 = Album(14, "National Anthem", 2000, 4)
     repo.create(album_1)
     repo.create(album_2)
     added_album_1 = repo.find(13)
     added_album_2 = repo.find(14)
-    assert added_album_1 == album_1
-    assert added_album_2 == album_2
+    assert added_album_1["album"] == album_1
+    assert added_album_2["album"] == album_2
 
 
 def test_delete_album_in_database(db_connection) -> None:
@@ -67,10 +65,10 @@ def test_delete_album_in_database(db_connection) -> None:
     """
     db_connection.seed("seeds/music_library.sql")
     repo = AlbumRepository(db_connection)
-    album = Album(13, "OK Computer", 1997, 5)
+    album = Album(13, "OK Computer", 1997, 4)
     repo.create(album)
     found_album_1 = repo.find(13)
-    assert found_album_1 == album
+    assert found_album_1["album"] == album
     repo.delete(13)
     found_album_2 = repo.find(13)
     assert found_album_2 is None
