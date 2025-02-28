@@ -93,7 +93,7 @@ def get_artist(id):
 
 
 @app.route("/artists", methods=["POST"])
-def add_artist() -> str:
+def add_new_artist() -> str:
     """Adds an artist to the database via a POST request."""
     connection = get_flask_database_connection(app)
     artist_repository = ArtistRepository(connection)
