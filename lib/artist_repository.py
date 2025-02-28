@@ -32,9 +32,9 @@ class ArtistRepository:
         )
         if rows:
             artist = Artist(rows[0]["id"], rows[0]["name"], rows[0]["genre"])
-            artist.albums = []
+            albums = []
             for row in rows:
-                artist.albums.append(
+                albums.append(
                     Album(
                         row["album_id"],
                         row["title"],
@@ -42,7 +42,7 @@ class ArtistRepository:
                         row["artist_id"],
                     )
                 )
-            return artist
+            return {'artist': artist, 'albums': albums}
         return None
 
     # Create a new artist

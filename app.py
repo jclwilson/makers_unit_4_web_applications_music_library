@@ -86,9 +86,9 @@ def get_artist(id):
     """Returns one artist to the browser, specified by id."""
     connection = get_flask_database_connection(app)
     artist_repository = ArtistRepository(connection)
-    artist = artist_repository.get_artist_albums(id)
-    if artist:
-        return render_template("artist.html", artist=artist)
+    artist_info = artist_repository.get_artist_albums(id)
+    if artist_info:
+        return render_template("artist.html", artist=artist_info['artist'], album=artist_info['albums'])
     return render_template("404.html")
 
 
