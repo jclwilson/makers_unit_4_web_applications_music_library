@@ -108,6 +108,17 @@ def test_add_invalid_album_returns_error(page, test_web_address, db_connection) 
     """When an invalid album is submitted, app returns error"""
     db_connection.seed("seeds/music_library.sql")
     page.goto(f"http://{test_web_address}/albums/new")
+    page.fill("input[name=album-title]", " ")
+    page.fill("input[name=album-release-year]", "1997")
+    page.fill("input[name=album-artist-id]", "1")
+    page.get_by_text("submit").click()
+    expect(page.get_by_text("Whoops, there were some errors!")).to_be_visible()
+
+
+def test_add_valid_album_returns_success(page, test_web_address, db_connection) -> None:
+    """When a valid new album is submitted, it is added to the database"""
+    db_connection.seed("seeds/music_library.sql")
+    page.goto(f"http://{test_web_address}/albums/new")
     page.fill("input[name=album-title]", "OK Computer")
     page.fill("input[name=album-release-year]", "1997")
     page.fill("input[name=album-artist-id]", "1")
@@ -118,7 +129,3 @@ def test_add_invalid_album_returns_error(page, test_web_address, db_connection) 
     expect(album_title).to_have_text("Title: OK Computer")
     album_title = page.locator("#album_release_year")
     expect(album_title).to_have_text("Release year: 1997")
-
-
-def test_add_valid_album_returns_success(page, test_web_address, db_connection) -> None:
-    """When a valid new album is submitted, it is added to the database"""
