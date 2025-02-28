@@ -129,3 +129,52 @@ def test_add_valid_album_returns_success(page, test_web_address, db_connection) 
     expect(album_title).to_have_text("Title: OK Computer")
     album_title = page.locator("#album_release_year")
     expect(album_title).to_have_text("Release year: 1997")
+
+
+def test_add_artist_path_parameters_valid(page, test_web_address, db_connection) -> None:
+    """When we call /artists/new, return an html form."""
+    db_connection.seed("seeds/music_library.sql")
+    page.goto(f"http://{test_web_address}/artists/new")
+    header_tag = page.locator("h1")
+    expect(header_tag).to_have_text("Music Library App")
+    subheader_tag = page.locator("h2")
+    expect(subheader_tag).to_have_text("Add artist")
+    input_form= page.locator("form")
+    expect(input_form).to_have_id("add-new-artist-form")
+
+
+def test_add_invalid_artist_name_returns_error(page, test_web_address, db_connection) -> None:
+    """When an invalid artist is submitted, app returns error."""
+    db_connection.seed("seeds/music_library.sql")
+    page.goto(f"http://{test_web_address}/artists/new")
+    page.fill("input[name=artist-name]", " ")
+    page.fill("input[name=artist-genre]", "Alternative")
+    page.get_by_text("submit").click()
+    error_notification= page.locator("#errors")
+    expect(error_notification).to_be_visible()
+
+
+def test_add_invalid_artist_genre_returns_error(page, test_web_address, db_connection) -> None:
+    """When an invalid artist is submitted, app returns error."""
+    db_connection.seed("seeds/music_library.sql")
+    page.goto(f"http://{test_web_address}/artists/new")
+    page.fill("input[name=artist-name]", "Jake")
+    page.fill("input[name=artist-genre]", " ")
+    page.get_by_text("submit").click()
+    error_notification= page.locator("#errors")
+    expect(error_notification).to_be_visible()
+
+
+def test_add_valid_artist_returns_success(page, test_web_address, db_connection) -> None:
+    """When a valid new artist is submitted, it is added to the database"""
+    db_connection.seed("seeds/music_library.sql")
+    page.goto(f"http://{test_web_address}/artists/new")
+    page.fill("input[name=artist-name]", "Jake")
+    page.fill("input[name=artist-genre]", "Alternative")
+    page.get_by_text("submit").click()
+    subheader_tag = page.locator("#artist_id")
+    expect(subheader_tag).to_have_text("Artist 5")
+    artist_name= page.locator("#artist_name")
+    expect(artist_name).to_have_text("Name: Jake")
+    artist_genre= page.locator("#artist_genre")
+    expect(artist_genre).to_have_text("Genre: Alternative")
