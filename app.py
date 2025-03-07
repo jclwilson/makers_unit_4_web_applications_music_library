@@ -50,8 +50,11 @@ def get_album(id):
 
 @app.route("/albums/new", methods=["GET"])
 def get_new_album() -> str:
-    """Return HTML form to add new album"""
-    return render_template("add_album.html")
+    """Return HTML form to add new album."""
+    connection = get_flask_database_connection(app)
+    artist_repository = ArtistRepository(connection)
+    artists = artist_repository.all()
+    return render_template("add_album.html", artists=artists)
 
 
 @app.route("/albums/new", methods=["POST"])
