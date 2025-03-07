@@ -24,7 +24,7 @@ def seed():
     """Seed database manually by calling this route"""
     connection = get_flask_database_connection(app)
     connection.seed("seeds/music_library.sql")
-    return redirect( url_for("index"), code=200)
+    return redirect( "/", code=200)
 
 
 @app.route("/")
