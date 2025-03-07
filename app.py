@@ -39,9 +39,7 @@ def get_all_albums() -> str:
     connection = get_flask_database_connection(app)
     album_repository = AlbumRepository(connection)
     albums = album_repository.all()
-    if len(albums) > 0:
-        return render_template("albums.html", albums=albums)
-    return render_template("404.html"), 404
+    return render_template("albums.html", albums=albums)
 
 
 @app.route("/albums/<int:id>", methods=["GET"])
@@ -94,9 +92,7 @@ def get_all_artists():
     connection = get_flask_database_connection(app)
     artist_repository = ArtistRepository(connection)
     artists = artist_repository.all()
-    if len(artists) > 0:
-        return render_template("artists.html", artists=artists)
-    return render_template("404.html"), 404
+    return render_template("artists.html", artists=artists)
 
 
 @app.route("/artists/<int:id>", methods=["GET"])

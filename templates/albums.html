@@ -1,7 +1,8 @@
 {% extends 'layout.html' %}
 {% block content %}            
 <h2>Albums</h2>
-<a href="{{ url_for('add_new_album') }}">Add new album</a></li>
+<a title="Add a new album" href="{{ url_for('add_new_album') }}">Add new album</a></li>
+{% if albums | length > 0 %}
 <table id="album-table">
     <caption>All albums in the library</caption>
     <thead>
@@ -23,4 +24,7 @@
         {% endfor %}
     </tbody>
 </table>
+{% else %}
+<p>There are no albums in the library! Add some!</p>
+{% endif %}
 {% endblock %}

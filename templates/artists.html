@@ -2,23 +2,27 @@
 {% block content %}            
 <h2>Artists</h2>
 <a title="Add a new artist" href="{{ url_for('add_new_artist') }}">Add artist</a>
-<table id="artist-table">
-    <caption>All artists in the library</caption>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Genre</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for artist in artists %}
-        <tr>
-            <td>{{ artist.id }}</td>
-            <td><a title="{{ artist.name }}" href="{{ url_for('get_artist', id = artist.id) }}">{{ artist.name }}</a></td>
-            <td>{{ artist.genre }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% if artists | length > 0 %}
+    <table id="artist-table">
+        <caption>All artists in the library</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Genre</th>
+            </tr>
+        </thead>
+            <tbody>
+                {% for artist in artists %}
+                <tr>
+                    <td>{{ artist.id }}</td>
+                    <td><a title="{{ artist.name }}" href="{{ url_for('get_artist', id = artist.id) }}">{{ artist.name }}</a></td>
+                    <td>{{ artist.genre }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>There are no artists! Add one!</p>
+    {% endif %}
 {% endblock %}
