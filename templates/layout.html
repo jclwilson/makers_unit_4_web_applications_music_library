@@ -10,6 +10,7 @@
     </head>
     <body>
         <header id="site-header">
+            <div id="cd"><div id="cd-hole"></div></div>
             <h1 id="site-header-title"><a href="{{ url_for('index') }}">Music Library App!</a></h1>
             <nav id="header-nav">
                 <ul id="header-menu">
@@ -22,5 +23,16 @@
         <main>
             {% block content %}{% endblock %}
         </main>
+        <script>
+            let playButton = document.getElementById('cd');
+
+            playButton.addEventListener("click", play, false);
+
+            function play() {
+                var audio = document.getElementById("audio");
+                audio.play()
+            }
+        </script>
+        <audio id="audio" src="{{ url_for('static', filename='DJ.mp3') }}"></audio>
     </body>
 </html>

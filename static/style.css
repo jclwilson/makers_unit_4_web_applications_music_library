@@ -40,6 +40,30 @@ table caption {
     margin-bottom:1em;
 }
 
+#cd {
+    height: 10vh;
+    border: 0.2vh grey solid;
+    width: 10vh;
+    border-radius: 5vh;
+    background-image: repeating-conic-gradient(white 50%, grey 60%, violet 63%, deepskyblue 64%, aqua 65%, palegreen 66%, yellow 67%, orange 68%, red 69%, grey 70%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: spin 4s linear infinite;
+}
+
+#cd-hole {
+    height: 2vh;
+    width: 2vh;
+    display: inline-block;
+    background: blue;
+    /* top: 4.1vh; */
+    border-radius: 1vh;
+    /* flex: 1; */
+    /* position: relative; */
+    background: radial-gradient(blue 0.5vh, silver 0.6vh, silver 0.8vh, white 1vh);
+}
+
 #site-header {
     display: flex;
     flex-direction: column;
@@ -92,4 +116,18 @@ button:hover {
 
 ::placeholder {
         color: rgba(255, 255, 255, 0.6);
+}
+
+@keyframes spin {
+    from{
+        transform: rotate3d(0, 0, 0, 0deg);
+    }
+    to{
+        transform: rotate3d(1, 1, 2, 360deg);
+    }
+}
+
+@media only screen and (max-width > 1000px) {
+    body {
+    }
 }
