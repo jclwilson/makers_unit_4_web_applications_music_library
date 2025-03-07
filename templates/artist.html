@@ -1,18 +1,45 @@
 {% extends 'layout.html' %}
 {% block content %}            
-<h2 id="artist_id">Artist {{ artist.id }}</h2>
-<ul id="artist-info">
-    <li id="artist_name">Name: {{ artist.name }}</li>
-    <li id="artist_genre">Genre: {{ artist.genre }}</li>
-</ul>
+<h2 id="artist_id">Artist</h2>
+<table id="artist-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Genre</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ artist.id }}</td>
+            <td><a title="{{ artist.name }}" href="{{ url_for('get_artist', id = artist.id) }}">{{ artist.name }}</a></td>
+            <td>{{ artist.genre }}</td>
+        </tr>
+    </tbody>
+</table>
 <h3>Options</h3>
 <form id="artist-options" method="POST" action="/artists/delete/{{ artist.id }}">
     <button type="submit" id="delete-artist-button" value="" class="delete-button" name="delete-artist">Delete artist</button>
 </form>
 <h2>Albums</h2>
-<ul>
-    {% for album in albums %}
-    <li class="album"><a href="{{ url_for('get_album', id = album.id) }}"><cite>{{ album.title }}</cite> ({{ album.release_year }})</a></li>
-    {% endfor %}
-</ul>
+<table id="album-table">
+    <caption>All albums in the library</caption>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Release year</th>
+            <th>Artist ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for album in albums %}
+        <tr>
+            <td>{{ album.id }}</td>
+            <td><a title="{{ album.title }}" href="{{ url_for('get_album', id = album.id) }}">{{ album.title }}</a></td>
+            <td>{{ album.release_year }}</td>
+            <td><a title="{{ album.artist_id }}" href="{{ url_for('get_artist', id = album.artist_id) }}">{{ album.artist_id }}</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

@@ -1,9 +1,24 @@
 {% extends 'layout.html' %}
 {% block content %}            
 <h2>Artists</h2>
-<ol id="artist-list">
-    {% for artist in artists %}
-    <li class="artist"><a title="{{ artist.name }}" href="{{ url_for('get_artist', id = artist.id) }}">{{ artist.name }} ({{ artist.genre }})</li>
-    {% endfor %}
-</ol>
+<a title="Add a new artist" href="{{ url_for('add_new_artist') }}">Add artist</a>
+<table id="artist-table">
+    <caption>All artists in the library</caption>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Genre</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for artist in artists %}
+        <tr>
+            <td>{{ artist.id }}</td>
+            <td><a title="{{ artist.name }}" href="{{ url_for('get_artist', id = artist.id) }}">{{ artist.name }}</a></td>
+            <td>{{ artist.genre }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

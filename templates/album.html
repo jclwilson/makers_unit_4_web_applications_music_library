@@ -1,11 +1,23 @@
 {% extends 'layout.html' %}            
 {% block content %}
-<h2 id="album_id">Album {{ album.id }}</h2>
-<ul id="album-info">
-    <li id="album_title">Title: {{ album.title }}</li>
-    <li id="album_release_year">Release year: {{ album.release_year }}</li>
-    <li id="album_artist_id">Artist: <a href="{{ url_for('get_artist', id = artist.id) }}">{{ artist.name }}</a></li>
-</ul>
+<table id="album-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Release year</th>
+            <th>Artist</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ album.id }}</td>
+            <td><a title="{{ album.title }}" href="{{ url_for('get_album', id = album.id) }}">{{ album.title }}</a></td>
+            <td>{{ album.release_year }}</td>
+            <td><a title="{{ artist.name }}" href="{{ url_for('get_artist', id = artist.id) }}">{{ artist.name }}</a></td>
+        </tr>
+    </tbody>
+</table>
 <h3>Options</h3>
 <form id="album-options" method="POST" action="/albums/delete/{{ album.id }}">
     <button type="submit" id="delete-album-button" value="" class="delete-button" name="delete-album">Delete album</button>
