@@ -2,16 +2,20 @@
 <html lang="en-GB">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Music Library App</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        
+        <meta name="theme-color" content="blue">
     </head>
     <body>
-        <header>
-            <h1><a href="{{ url_for('index') }}">Music Library App</a></h1>
+        <header id="site-header">
+            <h1 id="site-header-title"><a href="{{ url_for('index') }}">Music Library App!</a></h1>
             <nav id="header-nav">
-                <ul>
-                    <li><a href="{{ url_for('get_all_artists') }}">Artists</a></li>
-                    <li><a href="{{ url_for('get_all_albums') }}">Albums</a></li>
+                <ul id="header-menu">
+                    <li id="header-menu-item"><a href="{{ url_for('index') }}">Home</a></li>
+                    <li id="header-menu-item"><a href="{{ url_for('get_all_artists') }}">Artists</a></li>
+                    <li id="header-menu-item"><a href="{{ url_for('get_all_albums') }}">Albums</a></li>
                 </ul>
             </nav>
         </header>
