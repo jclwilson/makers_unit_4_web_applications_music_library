@@ -5,7 +5,8 @@ body {
     margin: 0;
     padding: 1em;
     font-family: "ocr-a", 'consolas', monospace, monospace;
-    max-width: 1000px
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 a {
