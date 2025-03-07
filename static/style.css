@@ -1,10 +1,95 @@
 body {
     font-family: sans-serif;
+    color: white;
+    background-color: blue;
+    margin: 0;
+    padding: 1em;
+    font-family: "ocr-a", 'consolas', monospace, monospace;
+    max-width: 1000px
 }
+
+a {
+    color:inherit;
+}
+
+h1, h2, h3, h4 {
+    font-weight: normal;
+}
+
+table {
+    width:100%;
+}
+
+table, th, td {
+    border: 2px solid white;
+    padding: 1em;
+    border-collapse: collapse;
+}
+
+table caption {
+    padding: 1em 0;
+    text-align: left;
+}
+
+
 
 #errors {
     background: #EB455F;
     padding: 0.5em;
     color: #FEFEFE;
     margin-bottom:1em;
+}
+
+#site-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 2em;
+}
+
+#site-header-title a {
+    text-decoration: none;
+}
+
+#header-nav {
+    width:100%;
+}
+
+#header-menu {
+    display:flex;
+    list-style-type: none;
+    justify-content: space-evenly;
+    margin: 0;
+    padding: 0;
+}
+
+select, input {
+    font-family: monospace, monospace;
+    background: blue;
+    color: white;
+    border: none;
+    display: block;
+    border-bottom: 2px solid white;
+    font-size: 1em;
+    width: 30%;
+    margin-bottom: 1em;
+}
+
+button {
+    background: blue;
+    color: white;
+    border: 2px solid white;
+    font-size: inherit;
+    font-family: inherit;
+    padding: 0.5em;
+}
+
+button:hover {
+    background: white;
+    color:blue;
+    cursor: pointer;
+}
+
+::placeholder {
+        color: rgba(255, 255, 255, 0.6);
 }
