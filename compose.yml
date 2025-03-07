@@ -1,0 +1,36 @@
+services:
+  web:
+    container_name: web
+    restart: always
+    build: .
+    ports:
+      - "80:5000"
+    depends_on:
+      - db
+    environment:
+      ENVIRONMENT: PRODUCTION
+      DB_URL: postgresql://user:password@db:5432/music_library
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: music_library
+
+  db:
+    container_name: db
+    restart: always
+    image: postgres:latest
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./seeds/music_library.sql:/docker-entrypoint-initdb.d/music_library.sql
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: music_library
+volumes:
+  db_data:
+

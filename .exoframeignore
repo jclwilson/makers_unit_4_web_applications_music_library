@@ -1,0 +1,11 @@
+__pycache__
+.vscode
+.pytest_cache
+*venv*
+README.md
+__pycache__
+design-recipe.md
+recipe.md
+ruff.toml
+tests
+todo.md

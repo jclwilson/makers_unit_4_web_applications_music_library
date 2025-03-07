@@ -1,0 +1,16 @@
+{
+    "name": "music-library-data",
+    "domain": false,
+    "hostname": "music-library-data",
+    "image": "postgres:15",
+    "env": {
+        "POSTGRES_USER": "jake",
+        "POSTGRES_PASSWORD": "jakescomplicatedpassword",
+        "POSTGRES_HOSTNAME": "music-library-data",
+        "POSTGRES_PORT": 5432,
+        "POSTGRES_DB": "music_library"
+    },
+    "volumes": [
+        "music_library_data_volume:/var/lib/postgresql/data"
+    ]
+}

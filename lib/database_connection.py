@@ -11,25 +11,32 @@ from psycopg.rows import dict_row
 # If the below seems too complex right now, that's OK.
 # That's why we have provided it!
 class DatabaseConnection:
-    # VVV CHANGE BOTH OF THESE VVV
-    DEV_DATABASE_NAME = "music_library"
-    TEST_DATABASE_NAME = "music_library_test"
 
     def __init__(self, test_mode=False) -> None:
         self.test_mode = test_mode
 
-    # This method connects to PostgreSQL using the psycopg library. We connect
-    # to localhost and select the database name given in argument.
     def connect(self) -> None:
-        try:
-            self.connection = psycopg.connect(
-                f"postgresql://localhost/{self._database_name()}", row_factory=dict_row
-            )
-        except psycopg.OperationalError:
-            raise Exception(
-                f"Couldn't connect to the database {self._database_name()}! "
-                f"Did you create it using `createdb {self._database_name()}`?"
-            )
+        db_user = os.environ.get("POSTGRES_USER")
+        db_password = os.environ.get("POSTGRES_PASSWORD")
+        db_host = os.environ.get("POSTGRES_HOSTNAME")
+        db_port = os.environ.get("POSTGRES_PORT")
+        db_name = os.environ.get("POSTGRES_DB", "music_library")
+        environment = os.environ.get("APP_ENV", "TESTING")
+        if environment == "PRODUCTION":
+            try:
+                self.connection = psycopg.connect(
+                    f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}", row_factory=dict_row
+                )
+            except psycopg.OperationalError:
+                raise Exception( f"Couldn't connect -> {db_user}:PASSWORD@{db_host}:{db_port}/{db_name}")
+        else:
+            try:
+                self.connection = psycopg.connect( 
+                    f"postgresql://localhost/{db_name}", row_factory=dict_row
+                )
+            except psycopg.OperationalError:
+                raise Exception( f"Couldn't connect -> localhost/{db_name}")
+
 
     # This method seeds the database with the given SQL file.
     # We use it to set up our database ready for our tests or application.
@@ -65,13 +72,6 @@ class DatabaseConnection:
     def _check_connection(self) -> None:
         if self.connection is None:
             raise Exception(self.CONNECTION_MESSAGE)
-
-    # This private method returns the name of the database we should use.
-    def _database_name(self):
-        if self.test_mode:
-            return self.TEST_DATABASE_NAME
-        return self.DEV_DATABASE_NAME
-
 
 # This function integrates with Flask to create one database connection that
 # Flask request can use. To see how to use it, look at example_routes.py

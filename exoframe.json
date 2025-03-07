@@ -1,0 +1,13 @@
+{
+    "name": "music-library-app",
+    "domain": "jake-music-library.xf.mkrs.link",
+    "port": 80,
+    "env": {
+        "APP_ENV": "PRODUCTION",
+        "POSTGRES_USER": "jake",
+        "POSTGRES_PASSWORD": "jakescomplicatedpassword",
+        "POSTGRES_HOSTNAME": "music-library-data",
+        "POSTGRES_PORT": 5432,
+        "POSTGRES_DB": "music_library"
+    }
+}
