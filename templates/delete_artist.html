@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}            
+{% block content %}
+<h2 id="artist_id">Deleted artist</h2>
+{% if errors %}
+<aside id="errors">
+    <p>Whoops, there were some errors!</p>
+    <ol>
+    {% for error in errors %}
+        <li>{{ error }}</li>
+    {% endfor %} 
+    </ol>
+</aside>
+{% endif %}
+<table>
+    <caption>Deleted the following artist from the library</caption>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Genre</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ artist.id }}</td>
+            <td>{{ artist.name }}</td>
+            <td>{{ artist.genre }}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

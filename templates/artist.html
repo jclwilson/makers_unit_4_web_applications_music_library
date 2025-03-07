@@ -5,6 +5,10 @@
     <li id="artist_name">Name: {{ artist.name }}</li>
     <li id="artist_genre">Genre: {{ artist.genre }}</li>
 </ul>
+<h3>Options</h3>
+<form id="artist-options" method="POST" action="/artists/delete/{{ artist.id }}">
+    <button type="submit" id="delete-artist-button" value="" class="delete-button" name="delete-artist">Delete artist</button>
+</form>
 <h2>Albums</h2>
 <ul>
     {% for album in albums %}

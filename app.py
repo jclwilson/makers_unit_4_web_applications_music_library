@@ -121,6 +121,14 @@ def add_new_artist() -> str:
     print("invalid")
     return render_template("add_artist.html", errors=artist.generate_errors()), 400
 
+@app.route("/artists/delete/<int:id>", methods=["POST"])
+def delete_artist(id):
+    """Delete artist of given ID"""
+    connection = get_flask_database_connection(app)
+    artist_repository = ArtistRepository(connection)
+    artist = artist_repository.delete(id)
+    return render_template("delete_artist.html", artist=artist), 202
+    
 
 """
 Start app

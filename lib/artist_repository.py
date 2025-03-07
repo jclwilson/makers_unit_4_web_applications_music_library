@@ -57,5 +57,5 @@ class ArtistRepository:
         return artist
 
     def delete(self, artist_id) -> None:
-        self._connection.execute("DELETE FROM artists WHERE id = %s", [artist_id])
-        return
+        rows = self._connection.execute("DELETE FROM artists WHERE id = %s RETURNING *;", [artist_id])
+        return rows[0]
