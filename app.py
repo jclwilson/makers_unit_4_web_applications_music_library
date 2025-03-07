@@ -69,6 +69,15 @@ def add_new_album() :
     return render_template("add_album.html", album=album, errors=album.generate_errors()), 400
 
 
+@app.route("/albums/delete/<int:id>", methods=["POST"])
+def delete_album(id):
+    """Delete album of given ID"""
+    connection = get_flask_database_connection(app)
+    album_repository = AlbumRepository(connection)
+    album = album_repository.delete(id)
+    return render_template("delete_album.html", album=album), 202
+    
+
 @app.route("/artists", methods=["GET"])
 def get_all_artists():
     """Returns all artists to the browser."""

@@ -48,6 +48,7 @@ class AlbumRepository:
         album.id = row["id"]
         return album
 
-    def delete(self, id: int) -> None:
+    def delete(self, id: int) -> object:
         """Delete a row from the albums table, reflecting the given ID."""
-        self._connection.execute("DELETE FROM albums WHERE id = %s", [id])
+        rows = self._connection.execute("DELETE FROM albums WHERE id = %s RETURNING *", [id])
+        return rows[0]

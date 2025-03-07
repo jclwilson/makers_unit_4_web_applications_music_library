@@ -6,4 +6,8 @@
     <li id="album_release_year">Release year: {{ album.release_year }}</li>
     <li id="album_artist_id">Artist: <a href="{{ url_for('get_artist', id = artist.id) }}">{{ artist.name }}</a></li>
 </ul>
+<h3>Options</h3>
+<form id="album-options" method="POST" action="/albums/delete/{{ album.id }}">
+    <button type="submit" id="delete-album-button" value="" class="delete-button" name="delete-album">Delete album</button>
+</form
 {% endblock %}
